@@ -16,14 +16,16 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, UISea
     var nome: String!
     var items = [GroceryItem]()
     var sobrenome: String!
-    var filteredNames = [GroceryItem]()
+    var filteredItems = [GroceryItem]()
     
     
     var detailViewController: DetailViewController? = nil
     
+    @IBOutlet weak var questionTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -64,7 +66,7 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, UISea
         //return items.count
         
         if (tableView == self.searchDisplayController?.searchResultsTableView){
-            return self.filteredNames.count
+            return self.filteredItems.count
         } else{
             return items.count
         }
@@ -82,7 +84,8 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, UISea
 
         
         if (tableView == self.searchDisplayController?.searchResultsTableView) {
-            items1 = self.filteredNames[indexPath.row]
+            items1 = self.filteredItems[indexPath.row]
+            
         } else {
             items1 = self.items[indexPath.row]
         }
@@ -95,7 +98,7 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, UISea
         
         var items1: GroceryItem
         if (tableView == self.searchDisplayController?.searchResultsTableView) {
-            items1 = self.filteredNames[indexPath.row]
+            items1 = self.filteredItems[indexPath.row]
         } else {
             items1 = self.items[indexPath.row]
         }
@@ -106,13 +109,12 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, UISea
     
     func filterContetnForSearchText(searchText: String, scope: String = "All") {
     
-        self.filteredNames = self.items.filter({ (friend: GroceryItem) -> Bool in
+        self.filteredItems = self.items.filter({ (friend: GroceryItem) -> Bool in
             var categoryMatch = (scope == "All")
             var stringMatch = friend.nome.rangeOfString(searchText)
             
             return categoryMatch && (stringMatch != nil)
         })
-        
         
     }
     
@@ -132,50 +134,5 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, UISea
         return true
         
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

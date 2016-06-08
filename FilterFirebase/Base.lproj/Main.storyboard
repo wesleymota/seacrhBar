@@ -71,6 +71,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="N5S-cz-IFh"/>
                     <connections>
+                        <outlet property="questionTableView" destination="wah-io-fbY" id="CTQ-Rv-dqq"/>
                         <outlet property="searchDisplayController" destination="guh-D2-YkM" id="ihB-GS-Zrj"/>
                         <segue destination="BS5-jx-3xD" kind="show" id="Du6-xc-vXo"/>
                     </connections>
