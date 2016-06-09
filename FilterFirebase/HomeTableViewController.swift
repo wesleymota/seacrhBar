@@ -23,18 +23,12 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, UISea
     
     @IBOutlet weak var questionTableView: UITableView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+        tableView.registerClass(CustomTableViewCell.classForCoder(), forCellReuseIdentifier: "Cell")
+        
         ref.child("Cadastro").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             var newItems = [GroceryItem]()
             
@@ -47,6 +41,19 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, UISea
             self.items = newItems
             self.tableView.reloadData()
         })
+        
+        
+        
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,17 +85,16 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, UISea
         
         let groceryItem = items[indexPath.row]
         var items1: GroceryItem
-        
-        cell.nameLbl.text = groceryItem.nome
-        cell.lastNameLbl.text = groceryItem.sobrenome
 
-        
         if (tableView == self.searchDisplayController?.searchResultsTableView) {
             items1 = self.filteredItems[indexPath.row]
             
         } else {
             items1 = self.items[indexPath.row]
         }
+
+        cell.nameLbl.text = groceryItem.nome
+        cell.lastNameLbl.text = groceryItem.sobrenome
         
         return cell
     }
